@@ -7,7 +7,7 @@ spring:
   jpa:
     open-in-view: false
     hibernate:
-      ddl-auto: none
+      ddl-auto: nome
 #     properties:
 #       hibernate:
 #         dialect: org.hibernate.dialect.MySQLDialect

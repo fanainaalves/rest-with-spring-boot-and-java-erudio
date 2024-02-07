@@ -57,12 +57,12 @@ public class PersonServices {
 		return vo;
 	}
 	
-	public PersonVOV2 createV2(PersonVOV2 person) {
-		logger.info("Creating one person with V2!");
-		var entity = mapper.convertVOToEntity(person);
-		var vo =  mapper.convertEntityToVo(repository.save(entity));
-		return vo;
-	}
+//	public PersonVOV2 createV2(PersonVOV2 person) {
+//		logger.info("Creating one person with V2!");
+//		var entity = mapper.convertVOToEntity(person);
+//		var vo =  mapper.convertEntityToVo(repository.save(entity));
+//		return vo;
+//	}
 	
 	public PersonVO update(PersonVO person) {
 		if(person == null) throw new RequiredObjectIsNullException();
