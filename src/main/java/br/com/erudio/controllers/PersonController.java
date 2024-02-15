@@ -59,7 +59,7 @@ public class PersonController {
 					@ApiResponse(description = "Internal Error", responseCode = "500", content = @Content),
 			}
 	)
-	public ResponseEntity<Page<PersonVO>> findAll(
+	public ResponseEntity<PagedModel<EntityModel<PersonVO>>> findAll(
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "size", defaultValue = "12") Integer size,
 			@RequestParam(value = "direction", defaultValue = "asc") String direction
