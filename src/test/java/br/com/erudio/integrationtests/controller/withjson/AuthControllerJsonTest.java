@@ -29,10 +29,10 @@ public class AuthControllerJsonTest extends AbstractIntegrationTest {
     @Order(1)
     public void testSignin() throws JsonMappingException, JsonProcessingException {
 
-        AccountCredentialsVO user = new AccountCredentialsVO("mysql", "123456");
+        AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 
         var tokenVO = given().basePath("/auth/signin")
-                .port(TestConfigs.SERVER_PORT)
+                .port(TestConfigs.API_PORT)
                 .contentType(TestConfigs.CONTENT_TYPE_JSON)
                 .body(user).when().post()
                 .then().statusCode(200)
@@ -50,7 +50,7 @@ public class AuthControllerJsonTest extends AbstractIntegrationTest {
         AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 
         var newTokenVO = given().basePath("/auth/refresh")
-                .port(TestConfigs.SERVER_PORT)
+                .port(TestConfigs.API_PORT)
                 .contentType(TestConfigs.CONTENT_TYPE_JSON)
                 .pathParams("username", tokenVO.getUsername())
                 .header(TestConfigs.HEADER_PARAM_AUTHORIZATION, "Bearer " + tokenVO.getRefreshToken())

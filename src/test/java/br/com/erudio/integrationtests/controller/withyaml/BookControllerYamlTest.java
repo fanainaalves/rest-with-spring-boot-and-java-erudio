@@ -54,8 +54,8 @@ public class BookControllerYamlTest extends AbstractIntegrationTest {
     @Order(1)
     public void authorization() {
         AccountCredentialsVO user = new AccountCredentialsVO();
-        user.setUsername("mysql");
-        user.setPassword("123456");
+        user.setUsername("leandro");
+        user.setPassword("admin123");
 
         var token =
                 given()
@@ -65,7 +65,7 @@ public class BookControllerYamlTest extends AbstractIntegrationTest {
                             .encoderConfig(EncoderConfig.encoderConfig()
                                     .encodeContentTypeAs(TestConfigs.CONTENT_TYPE_YML, ContentType.TEXT)))
                     .basePath("/auth/signin")
-                    .port(TestConfigs.SERVER_PORT)
+                    .port(TestConfigs.API_PORT)
                     .contentType(TestConfigs.CONTENT_TYPE_YML)
     				.accept(TestConfigs.CONTENT_TYPE_YML)
                     .body(user, objectMapper)
@@ -82,7 +82,7 @@ public class BookControllerYamlTest extends AbstractIntegrationTest {
                 new RequestSpecBuilder()
                     .addHeader(TestConfigs.HEADER_PARAM_AUTHORIZATION, "Bearer " + token)
                     .setBasePath("/api/book/v1")
-                    .setPort(TestConfigs.SERVER_PORT)
+                    .setPort(TestConfigs.API_PORT)
                     .addFilter(new RequestLoggingFilter(LogDetail.ALL))
                     .addFilter(new ResponseLoggingFilter(LogDetail.ALL))
                     .build();

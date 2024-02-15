@@ -53,13 +53,13 @@ public class BookControllerJsonTest extends AbstractIntegrationTest {
     @Order(1)
     public void authorization() {
         AccountCredentialsVO user = new AccountCredentialsVO();
-        user.setUsername("mysql");
-        user.setPassword("123456");
+        user.setUsername("leandro");
+        user.setPassword("admin123");
 
         var token =
                 given()
                     .basePath("/auth/signin")
-                    .port(TestConfigs.SERVER_PORT)
+                    .port(TestConfigs.API_PORT)
                     .contentType(TestConfigs.CONTENT_TYPE_JSON)
                     .body(user)
                     .when()
@@ -75,7 +75,7 @@ public class BookControllerJsonTest extends AbstractIntegrationTest {
                 new RequestSpecBuilder()
                     .addHeader(TestConfigs.HEADER_PARAM_AUTHORIZATION, "Bearer " + token)
                     .setBasePath("/api/book/v1")
-                    .setPort(TestConfigs.SERVER_PORT)
+                    .setPort(TestConfigs.API_PORT)
                     .addFilter(new RequestLoggingFilter(LogDetail.ALL))
                     .addFilter(new ResponseLoggingFilter(LogDetail.ALL))
                     .build();
