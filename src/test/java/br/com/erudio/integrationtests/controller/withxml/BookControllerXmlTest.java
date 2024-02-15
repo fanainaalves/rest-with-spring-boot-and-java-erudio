@@ -53,11 +53,11 @@ public class BookControllerXmlTest extends AbstractIntegrationTest {
 	@Order(0)
 	public void authorization() throws JsonMappingException, JsonProcessingException {
 		
-		AccountCredentialsVO user = new AccountCredentialsVO("mysql", "123456");
+		AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 		
 		var accessToken = given()
 				.basePath("/auth/signin")
-					.port(TestConfigs.SERVER_PORT)
+					.port(TestConfigs.API_PORT)
 					.contentType(TestConfigs.CONTENT_TYPE_XML)
 					.accept(TestConfigs.CONTENT_TYPE_XML)
 				.body(user)
@@ -73,7 +73,7 @@ public class BookControllerXmlTest extends AbstractIntegrationTest {
 		specification = new RequestSpecBuilder()
 				.addHeader(TestConfigs.HEADER_PARAM_AUTHORIZATION, "Bearer " + accessToken)
 				.setBasePath("/api/book/v1")
-				.setPort(TestConfigs.SERVER_PORT)
+				.setPort(TestConfigs.API_PORT)
 					.addFilter(new RequestLoggingFilter(LogDetail.ALL))
 					.addFilter(new ResponseLoggingFilter(LogDetail.ALL))
 				.build();

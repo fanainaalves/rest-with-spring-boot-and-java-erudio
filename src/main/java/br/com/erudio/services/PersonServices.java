@@ -3,6 +3,7 @@ package br.com.erudio.services;
 import java.util.List;
 import java.util.logging.Logger;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -75,7 +76,18 @@ public class PersonServices {
 		vo.add(linkTo(methodOn(PersonController.class).findById(vo.getKey())).withSelfRel());
 		return vo;
 	}
-	
+
+	@Transactional
+	public PersonVO disablePerson(Long id) {
+
+		logger.info("Disabling one person!");
+		repository.disablePerson(id);
+		var entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
+		var vo = DozerMapper.parseObject(entity, PersonVO.class);
+		vo.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel());
+		return vo;
+	}
+
 	public void delete(Long id) {
 		
 		logger.info("Deleting one person!");

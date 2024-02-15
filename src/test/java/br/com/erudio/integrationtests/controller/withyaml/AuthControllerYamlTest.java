@@ -51,7 +51,7 @@ public class AuthControllerYamlTest extends AbstractIntegrationTest {
                                 .encodeContentTypeAs(TestConfigs.CONTENT_TYPE_YML, ContentType.TEXT)))
                 .accept(TestConfigs.CONTENT_TYPE_YML)
                 .basePath("/auth/signin")
-                .port(TestConfigs.SERVER_PORT)
+                .port(TestConfigs.API_PORT)
                 .contentType(TestConfigs.CONTENT_TYPE_YML)
                 .body(user, objectMapper).when().post()
                 .then().statusCode(200)
@@ -66,14 +66,14 @@ public class AuthControllerYamlTest extends AbstractIntegrationTest {
     @Order(2)
     public void testRefresh() throws JsonMappingException, JsonProcessingException {
 
-        AccountCredentialsVO user = new AccountCredentialsVO("mysql", "123456");
+        AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 
         var newTokenVO = given().config(RestAssuredConfig.config()
                         .encoderConfig(EncoderConfig.encoderConfig()
                                 .encodeContentTypeAs(TestConfigs.CONTENT_TYPE_YML, ContentType.TEXT)))
                 .accept(TestConfigs.CONTENT_TYPE_YML)
                 .basePath("/auth/refresh")
-                .port(TestConfigs.SERVER_PORT)
+                .port(TestConfigs.API_PORT)
                 .contentType(TestConfigs.CONTENT_TYPE_YML)
                 .pathParams("username", tokenVO.getUsername())
                 .header(TestConfigs.HEADER_PARAM_AUTHORIZATION, "Bearer " + tokenVO.getRefreshToken())

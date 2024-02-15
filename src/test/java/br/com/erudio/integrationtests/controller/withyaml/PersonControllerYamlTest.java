@@ -53,7 +53,7 @@ public class PersonControllerYamlTest extends AbstractIntegrationTest {
 	@Order(0)
 	public void authorization() throws JsonMappingException, JsonProcessingException {
 
-		AccountCredentialsVO user = new AccountCredentialsVO("mysql", "123456");
+		AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 
 		var accessToken = given()
 				.config(
@@ -64,7 +64,7 @@ public class PersonControllerYamlTest extends AbstractIntegrationTest {
 												TestConfigs.CONTENT_TYPE_YML,
 												ContentType.TEXT)))
 				.basePath("/auth/signin")
-				.port(TestConfigs.SERVER_PORT)
+				.port(TestConfigs.API_PORT)
 				.contentType(TestConfigs.CONTENT_TYPE_YML)
 				.accept(TestConfigs.CONTENT_TYPE_YML)
 				.body(user, objectMapper)
@@ -80,7 +80,7 @@ public class PersonControllerYamlTest extends AbstractIntegrationTest {
 		specification = new RequestSpecBuilder()
 				.addHeader(TestConfigs.HEADER_PARAM_AUTHORIZATION, "Bearer " + accessToken)
 				.setBasePath("/api/person/v1")
-				.setPort(TestConfigs.SERVER_PORT)
+				.setPort(TestConfigs.API_PORT)
 				.addFilter(new RequestLoggingFilter(LogDetail.ALL))
 				.addFilter(new ResponseLoggingFilter(LogDetail.ALL))
 				.build();
@@ -295,7 +295,7 @@ public class PersonControllerYamlTest extends AbstractIntegrationTest {
 
 		RequestSpecification specificationWithoutToken = new RequestSpecBuilder()
 				.setBasePath("/api/person/v1")
-				.setPort(TestConfigs.SERVER_PORT)
+				.setPort(TestConfigs.API_PORT)
 				.addFilter(new RequestLoggingFilter(LogDetail.ALL))
 				.addFilter(new ResponseLoggingFilter(LogDetail.ALL))
 				.build();
