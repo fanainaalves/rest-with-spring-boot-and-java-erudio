@@ -53,7 +53,7 @@ public class PersonControllerYamlTest extends AbstractIntegrationTest {
 	@Order(0)
 	public void authorization() throws JsonMappingException, JsonProcessingException {
 
-		AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
+		AccountCredentialsVO user = new AccountCredentialsVO("mysql", "123456");
 
 		var accessToken = given()
 				.config(
