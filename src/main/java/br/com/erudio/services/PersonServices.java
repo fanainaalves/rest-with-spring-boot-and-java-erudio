@@ -10,6 +10,10 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
 
 import br.com.erudio.controllers.PersonController;
@@ -24,11 +28,14 @@ import br.com.erudio.repositories.PersonRepository;
 public class PersonServices {
 	
 	private Logger logger = Logger.getLogger(PersonServices.class.getName());
-	
+
 	@Autowired
 	PersonRepository repository;
 
-	public Page<PersonVO> findAll(Pageable pageable) {
+	@Autowired
+	PagedResourcesAssembler<PersonVO> assembler;
+
+	public PagedModel<EntityModel<PersonVO>> findAll(Pageable pageable) {
 
 		logger.info("Finding all people!");
 
@@ -37,7 +44,8 @@ public class PersonServices {
 		var personVosPage = personPage.map(p -> DozerMapper.parseObject(p, PersonVO.class));
 		personVosPage.map(p -> p.add(linkTo(methodOn(PersonController.class).findById(p.getKey())).withSelfRel()));
 
-		return personVosPage;
+		Link link = linkTo(methodOn(PersonController.class).findAll(pageable.getPageNumber(), pageable.getPageSize(), "asc")).withSelfRel();
+		return assembler.toModel(personVosPage, link);
 	}
 
 	public PersonVO findById(Long id) {
