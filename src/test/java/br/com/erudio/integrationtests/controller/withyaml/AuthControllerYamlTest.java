@@ -66,7 +66,7 @@ public class AuthControllerYamlTest extends AbstractIntegrationTest {
     @Order(2)
     public void testRefresh() throws JsonMappingException, JsonProcessingException {
 
-        AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
+        AccountCredentialsVO user = new AccountCredentialsVO("mysql", "123456");
 
         var newTokenVO = given().config(RestAssuredConfig.config()
                         .encoderConfig(EncoderConfig.encoderConfig()

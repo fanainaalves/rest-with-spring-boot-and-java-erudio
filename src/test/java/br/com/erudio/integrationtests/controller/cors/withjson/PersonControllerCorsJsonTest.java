@@ -46,7 +46,7 @@ public class PersonControllerCorsJsonTest extends AbstractIntegrationTest{
 	@Test
 	@Order(0)
 	public void authorization() throws JsonMappingException, JsonProcessingException {
-		AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
+		AccountCredentialsVO user = new AccountCredentialsVO("mysql", "123456");
 		var accessToken = given().basePath("/auth/signin")
 				.port(TestConfigs.SERVER_PORT)
 				.contentType(TestConfigs.CONTENT_TYPE_JSON)
