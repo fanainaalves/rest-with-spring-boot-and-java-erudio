@@ -46,16 +46,13 @@ public class BookControllerXmlTest extends AbstractIntegrationTest {
 	public static void setup() {
 		objectMapper = new XmlMapper();
 		objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-		
 		book = new BookVO();
 	}
 	
 	@Test
 	@Order(0)
 	public void authorization() throws JsonMappingException, JsonProcessingException {
-		
 		AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
-		
 		var accessToken = given()
 				.basePath("/auth/signin")
 					.port(TestConfigs.API_PORT)

@@ -126,9 +126,7 @@ class BookServicesTest {
 		assertEquals(25D, result.getPrice());
 		assertNotNull(result.getLaunchDate());
 	}
-	
 
-	
 	@Test
 	void testUpdateWithNullBook() {
 		Exception exception = assertThrows(RequiredObjectIsNullException.class, () -> {

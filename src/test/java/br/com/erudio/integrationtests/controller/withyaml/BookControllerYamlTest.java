@@ -40,9 +40,7 @@ import io.restassured.specification.RequestSpecification;
 public class BookControllerYamlTest extends AbstractIntegrationTest {
 
     private static RequestSpecification specification;
-
     private static YMLMapper objectMapper;
-
     private static BookVO book;
 
     @BeforeAll
@@ -92,15 +90,10 @@ public class BookControllerYamlTest extends AbstractIntegrationTest {
     @Test
     @Order(2)
     public void testCreate() throws JsonMappingException, JsonProcessingException {
-        
         mockBook();
 
-        book = given()
-                    .config(
-                        RestAssuredConfig
-                            .config()
-                            .encoderConfig(EncoderConfig.encoderConfig()
-                                    .encodeContentTypeAs(TestConfigs.CONTENT_TYPE_YML, ContentType.TEXT)))
+        book = given().config(RestAssuredConfig.config().encoderConfig(EncoderConfig.encoderConfig()
+                    .encodeContentTypeAs(TestConfigs.CONTENT_TYPE_YML, ContentType.TEXT)))
                     .spec(specification)
                 .contentType(TestConfigs.CONTENT_TYPE_YML)
 				.accept(TestConfigs.CONTENT_TYPE_YML)
@@ -126,15 +119,11 @@ public class BookControllerYamlTest extends AbstractIntegrationTest {
     @Test
     @Order(3)
     public void testUpdate() throws JsonMappingException, JsonProcessingException {
-        
         book.setTitle("Docker Deep Dive - Updated");
-
         BookVO bookUpdated = given()
-                    .config(
-                        RestAssuredConfig
-                            .config()
-                            .encoderConfig(EncoderConfig.encoderConfig()
-                                    .encodeContentTypeAs(TestConfigs.CONTENT_TYPE_YML, ContentType.TEXT)))
+                    .config(RestAssuredConfig.config()
+                        .encoderConfig(EncoderConfig.encoderConfig()
+                        .encodeContentTypeAs(TestConfigs.CONTENT_TYPE_YML, ContentType.TEXT)))
                     .spec(specification)
                 .contentType(TestConfigs.CONTENT_TYPE_YML)
 				.accept(TestConfigs.CONTENT_TYPE_YML)
@@ -228,9 +217,7 @@ public class BookControllerYamlTest extends AbstractIntegrationTest {
                         .body()
                         .as(PagedModelBook.class, objectMapper);
 
-
         List<BookVO> content = response.getContent();
-
         BookVO foundBookOne = content.get(0);
         
         assertNotNull(foundBookOne.getId());
