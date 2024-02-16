@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.Arrays;
 import java.util.List;
 
+import br.com.erudio.integrationtests.vo.wrappers.WrapperPersonVO;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
@@ -279,7 +280,7 @@ public class PersonControllerYamlTest extends AbstractIntegrationTest {
 	@Order(6)
 	public void testFindAll() throws JsonMappingException, JsonProcessingException {
 
-		var content = given().spec(specification)
+		var wrapper = given().spec(specification)
 				.config(
 						RestAssuredConfig
 								.config()
@@ -295,9 +296,9 @@ public class PersonControllerYamlTest extends AbstractIntegrationTest {
 				.statusCode(200)
 				.extract()
 				.body()
-				.as(PersonVO[].class, objectMapper);
+				.as(WrapperPersonVO.class, objectMapper);
 
-		List<PersonVO> people = Arrays.asList(content);
+		var people = wrapper.getEmbedded().getPersons();
 
 		PersonVO foundPersonOne = people.get(0);
 
