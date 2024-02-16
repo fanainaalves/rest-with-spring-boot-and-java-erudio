@@ -13,9 +13,12 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.config.EncoderConfig;
+import io.restassured.config.RestAssuredConfig;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
+import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
@@ -290,6 +293,45 @@ public class PersonControllerXmlTest extends AbstractIntegrationTest {
 
 	@Test
 	@Order(7)
+	public void testFindByName() throws JsonMappingException, JsonProcessingException {
+
+		var content = given().spec(specification)
+				.contentType(TestConfigs.CONTENT_TYPE_XML)
+				.accept(TestConfigs.CONTENT_TYPE_XML)
+				.pathParam("firstName", "ayr")
+				.queryParams("page", 0, "size", 6, "direction", "asc")
+				.when()
+				.get("findPersonByName/{firstName}")
+				.then()
+				.statusCode(200)
+				.extract()
+				.body()
+				.asString();
+
+		PagedModelPerson wrapper = objectMapper.readValue(content, PagedModelPerson.class);
+		var people = wrapper.getContent();
+
+		PersonVO foundPersonOne = people.get(0);
+
+		assertNotNull(foundPersonOne.getId());
+		assertNotNull(foundPersonOne.getFirstName());
+		assertNotNull(foundPersonOne.getLastName());
+		assertNotNull(foundPersonOne.getAddress());
+		assertNotNull(foundPersonOne.getGender());
+
+		assertTrue(foundPersonOne.getEnabled());
+
+		assertEquals(1, foundPersonOne.getId());
+
+		assertEquals("Ayrton", foundPersonOne.getFirstName());
+		assertEquals("Senna", foundPersonOne.getLastName());
+		assertEquals("São Paulo", foundPersonOne.getAddress());
+		assertEquals("Male", foundPersonOne.getGender());
+	}
+
+
+	@Test
+	@Order(8)
 	public void testFindAllWithoutToken() throws JsonMappingException, JsonProcessingException {
 
 		RequestSpecification specificationWithoutToken = new RequestSpecBuilder()
@@ -306,6 +348,34 @@ public class PersonControllerXmlTest extends AbstractIntegrationTest {
 				.get()
 				.then()
 				.statusCode(403);
+	}
+
+	@Test
+	@Order(9)
+	public void testHATEOAS() throws JsonMappingException, JsonProcessingException {
+
+		var content = given().spec(specification)
+				.contentType(TestConfigs.CONTENT_TYPE_XML)
+				.accept(TestConfigs.CONTENT_TYPE_XML)
+				.queryParams("page", 3, "size", 10, "direction", "asc")
+				.when()
+				.get()
+				.then()
+				.statusCode(200)
+				.extract()
+				.body()
+				.asString();
+
+		assertTrue(content.contains("<links><rel>self</rel><href>http://localhost:8888/api/person/v1/677</href></links>"));
+		assertTrue(content.contains("<links><rel>self</rel><href>http://localhost:8888/api/person/v1/846</href></links>"));
+		assertTrue(content.contains("<links><rel>self</rel><href>http://localhost:8888/api/person/v1/714</href></links>"));
+
+		assertTrue(content.contains("<links><rel>first</rel><href>http://localhost:8888/api/person/v1?direction=asc&amp;page=0&amp;size=10&amp;sort=firstName,asc</href></links>"));
+		assertTrue(content.contains("<links><rel>prev</rel><href>http://localhost:8888/api/person/v1?direction=asc&amp;page=2&amp;size=10&amp;sort=firstName,asc</href></links>"));
+		assertTrue(content.contains("<links><rel>self</rel><href>http://localhost:8888/api/person/v1?page=3&amp;size=10&amp;direction=asc</href></links>"));
+		assertTrue(content.contains("<links><rel>next</rel><href>http://localhost:8888/api/person/v1?direction=asc&amp;page=4&amp;size=10&amp;sort=firstName,asc</href></links>"));
+		assertTrue(content.contains("<links><rel>last</rel><href>http://localhost:8888/api/person/v1?direction=asc&amp;page=100&amp;size=10&amp;sort=firstName,asc</href></links>"));
+		assertTrue(content.contains("<page><size>10</size><totalElements>1007</totalElements><totalPages>101</totalPages><number>3</number></page>"));
 	}
 
 	private void mockPerson() {
