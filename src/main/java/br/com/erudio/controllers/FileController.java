@@ -49,7 +49,7 @@ public class FileController {
     //my_files.txt
     @GetMapping("/downloadFile/{filename:.+}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String filename, HttpServletRequest request){
-        logger.info("Readinf a file on disk");
+        logger.info("Reading a file on disk");
         Resource resource = service.loadFileAsResource(filename);
         String contentType = "";
 
