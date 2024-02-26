@@ -151,7 +151,7 @@
 			   <groupId>org.flywaydb</groupId>
 			   <artifactId>flyway-maven-plugin</artifactId>
 			   <configuration>
-			      <url>jdbc:mysql://localhost:3306/rest_with_spring_boot_erudio?useTimezone=true&amp;serverTimezone=UTC&amp;useSSL=false</url>
+			      <url>jdbc:mysql://localhost:3308/rest_with_spring_boot_erudio?useTimezone=true&amp;serverTimezone=UTC&amp;useSSL=false</url>
 			      <user>mysql</user>
 			      <password>123456</password>
 			   </configuration>
