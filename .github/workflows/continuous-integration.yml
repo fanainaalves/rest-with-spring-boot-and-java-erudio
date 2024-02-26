@@ -27,7 +27,7 @@ jobs:
 
     - name: Build Application JAR
       working-directory: ./Rest Api Erudio/rest-with-spring-boot-and-java-erudio
-      run: mvn clean package -DskipTests
+      run: mvn clean package
 
     - name: Docker Compose Build
       working-directory: ./Rest Api Erudio
