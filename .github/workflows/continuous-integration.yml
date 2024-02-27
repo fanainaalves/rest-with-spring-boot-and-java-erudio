@@ -30,7 +30,7 @@ jobs:
       run: mvn clean package -DiskipTests
 
     - name: Docker Compose Build
-      working-directory: Documentos/Treinamentos/8 - API REST e RESTful com Java e Docker/Rest Api Erudio/rest-with-spring-boot-and-java-erudio
+      working-directory: Documentos/Treinamentos/8 - API REST e RESTful com Java e Docker/Rest Api Erudio
       run: docker compose build
 
     - name: Push to Docker Hub Container Registry
