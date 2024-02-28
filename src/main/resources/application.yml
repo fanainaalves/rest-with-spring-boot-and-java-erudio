@@ -3,7 +3,7 @@ server:
 cors:
   originPatterns: http://localhost:3000,http://localhost:8080,https://erudio.com.br
 file:
-  upload-dir: /Users/fsilva3/OneDrive - Getronics/Documentos/Rest Api Erudio/UploadDir
+  upload-dir: /UploadDir
 security:
   jwt:
     token:
@@ -12,9 +12,9 @@ security:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3308/rest_with_spring_boot_erudio?useTimezone=true&serverTimezone=UTC
-    username: mysql
-    password: 123456
+    url: jdbc:mysql://rest-with-spring-boot-erudio.c72k22km8q13.us-east-1.rds.amazonaws.com:3306/rest_with_spring_boot_erudio?useTimezone=true&serverTimezone=UTC
+    username: mysqlDB
+    password: 12345678
   jpa:
     open-in-view: false
     hibernate:
