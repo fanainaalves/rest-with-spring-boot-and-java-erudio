@@ -3,7 +3,7 @@ server:
 cors:
   originPatterns: http://localhost:3000,http://localhost:8080,https://erudio.com.br
 file:
-  upload-dir: /home/runner/work/Rest-Api-Erudio/UploadDir
+  upload-dir: /home/runner/work/Documentos/Rest-Api-Erudio/UploadDir
 security:
   jwt:
     token:
