@@ -69,5 +69,4 @@ public class Permission implements GrantedAuthority, Serializable {
             return false;
         return true;
     }
-
 }
